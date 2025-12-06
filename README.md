@@ -9,8 +9,7 @@ A modern, secure, and AI-powered password manager application built with Flutter
 
 ## 📱 Screenshots (Ekran Görüntüleri)
 
-|                      Splash Screen                      |                       Home Screen                       |                   Password Generator                    |
-| :-----------------------------------------------------: | :-----------------------------------------------------: | :-----------------------------------------------------: | ------------------------------------------------------- | ------------------------------------------------------- |
+
 | <img src="assets\screenshots\screen5.jpg" width="200"/> | <img src="assets\screenshots\screen4.jpg" width="200"/> | <img src="assets\screenshots\screen3.jpg" width="200"/> | <img src="assets\screenshots\screen2.jpg" width="200"/> | <img src="assets\screenshots\screen1.jpg" width="200"/> |
 
 ## ✨ Features (Özellikler)
