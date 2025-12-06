@@ -34,7 +34,3 @@ A modern, secure, and AI-powered password manager application built with Flutter
 ## 👨‍💻 Developer
 
 Developed by **Gülay ŞAHİN**.
-
----
-
-_This project is a Computer Engineering Capstone Project._
