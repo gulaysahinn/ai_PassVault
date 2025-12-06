@@ -9,8 +9,7 @@ A modern, secure, and AI-powered password manager application built with Flutter
 
 ## 📱 Screenshots (Ekran Görüntüleri)
 
-|                      Splash Screen                      |                       Home Screen                       |                   Password Generator                    |
-| :-----------------------------------------------------: | :-----------------------------------------------------: | :-----------------------------------------------------: | ------------------------------------------------------- | ------------------------------------------------------- |
+
 | <img src="assets\screenshots\screen5.jpg" width="200"/> | <img src="assets\screenshots\screen4.jpg" width="200"/> | <img src="assets\screenshots\screen3.jpg" width="200"/> | <img src="assets\screenshots\screen2.jpg" width="200"/> | <img src="assets\screenshots\screen1.jpg" width="200"/> |
 
 ## ✨ Features (Özellikler)
@@ -29,36 +28,9 @@ A modern, secure, and AI-powered password manager application built with Flutter
 - **UI Components:** Glassmorphism, Google Fonts
 - **Animations:** Flutter Animate
 
-## 🚀 Getting Started (Kurulum)
 
-To run this project locally, follow these steps:
 
-1.  **Clone the repository:**
-
-    ```bash
-    git clone [https://github.com/KULLANICI_ADIN/ai_password_manager.git](https://github.com/KULLANICI_ADIN/ai_password_manager.git)
-    ```
-
-2.  **Install dependencies:**
-
-    ```bash
-    cd ai_password_manager
-    flutter pub get
-    ```
-
-3.  **Run the app:**
-    ```bash
-    flutter run
-    ```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 👨‍💻 Developer
 
-Developed by **[Senin Adın]**.
-
----
-
-_This project is a Computer Engineering Capstone Project._
+Developed by **Gülay ŞAHİN**.
