@@ -28,35 +28,12 @@ A modern, secure, and AI-powered password manager application built with Flutter
 - **UI Components:** Glassmorphism, Google Fonts
 - **Animations:** Flutter Animate
 
-## 🚀 Getting Started (Kurulum)
 
-To run this project locally, follow these steps:
 
-1.  **Clone the repository:**
-
-    ```bash
-    git clone [https://github.com/KULLANICI_ADIN/ai_password_manager.git](https://github.com/KULLANICI_ADIN/ai_password_manager.git)
-    ```
-
-2.  **Install dependencies:**
-
-    ```bash
-    cd ai_password_manager
-    flutter pub get
-    ```
-
-3.  **Run the app:**
-    ```bash
-    flutter run
-    ```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 👨‍💻 Developer
 
-Developed by **[Senin Adın]**.
+Developed by **Gülay ŞAHİN**.
 
 ---
 
