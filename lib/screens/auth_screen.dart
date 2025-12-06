@@ -21,7 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   void initState() {
     super.initState();
-    // Uygulama açılır açılmaz parmak izi sor
+
     _authenticate();
   }
 
@@ -33,7 +33,6 @@ class _AuthScreenState extends State<AuthScreen> {
     });
 
     try {
-      // Cihazda biyometrik donanım var mı kontrol et
       final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
       final bool canAuthenticate =
           canAuthenticateWithBiometrics || await auth.isDeviceSupported();
@@ -42,18 +41,17 @@ class _AuthScreenState extends State<AuthScreen> {
         setState(() {
           _statusMessage = "Cihazınızda Biyometrik Giriş Desteklenmiyor.";
         });
-        // Desteklemiyorsa direkt ana sayfaya al (veya şifre sorulabilir)
+
         await Future.delayed(const Duration(seconds: 2));
         _navigateToHome();
         return;
       }
 
-      // Parmak İzi / Yüz Tanıma Penceresini Aç
       authenticated = await auth.authenticate(
         localizedReason: 'Kasanıza erişmek için kimliğinizi doğrulayın',
         options: const AuthenticationOptions(
-          stickyAuth: true, // Uygulama alta atılsa bile sormaya devam et
-          biometricOnly: false, // Yüz/Parmak izi yoksa PIN kodu sorabilsin
+          stickyAuth: true,
+          biometricOnly: false,
         ),
       );
     } on PlatformException catch (e) {

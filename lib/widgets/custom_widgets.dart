@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../core/app_theme.dart';
 
-// 1. Modern Glass Card (Buzlu Cam Efekti)
 class GlassCard extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;
@@ -13,7 +12,7 @@ class GlassCard extends StatelessWidget {
     return Container(
       padding: padding ?? const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppTheme.surface.withOpacity(0.8), // Hafif saydam
+        color: AppTheme.surface.withOpacity(0.8),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: Colors.white.withOpacity(0.05)),
         boxShadow: [
@@ -29,7 +28,6 @@ class GlassCard extends StatelessWidget {
   }
 }
 
-// 2. Özel Switch Satırı
 class OptionRow extends StatelessWidget {
   final String label;
   final bool value;

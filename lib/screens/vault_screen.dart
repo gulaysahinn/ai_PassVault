@@ -18,8 +18,8 @@ class _VaultScreenState extends State<VaultScreen> {
   final StorageService _storage = StorageService();
 
   void _deletePassword(int index) async {
-    await _storage.deletePassword(index); // Not: Gerçek projede ID kullanılmalı
-    setState(() {}); // Listeyi yenile
+    await _storage.deletePassword(index);
+    setState(() {});
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
           content: Text("Şifre Silindi"), backgroundColor: AppTheme.error),
@@ -37,7 +37,6 @@ class _VaultScreenState extends State<VaultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Hive kutusunu dinleyerek otomatik güncelleme sağlıyoruz (ValueListenableBuilder)
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
@@ -49,12 +48,10 @@ class _VaultScreenState extends State<VaultScreen> {
       body: ValueListenableBuilder(
         valueListenable: Hive.box('passwords').listenable(),
         builder: (context, Box box, widget) {
-          // Verileri al ve sırala
           List<dynamic> rawList = box.values.toList();
           List<PasswordModel> items =
               rawList.map((e) => PasswordModel.fromMap(e)).toList();
-          items.sort(
-              (a, b) => b.createdAt.compareTo(a.createdAt)); // Yeniden eskiye
+          items.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
           if (items.isEmpty) {
             return Center(
@@ -77,9 +74,6 @@ class _VaultScreenState extends State<VaultScreen> {
             itemCount: items.length,
             itemBuilder: (context, index) {
               final item = items[index];
-              // Silme işlemi için orijinal indexi bulmamız lazım (Hive için)
-              // Şimdilik listeyi ters çevirdiğimiz için basit bir çıkarma işlemi yapıyoruz
-              // Hive'dan silerken dikkat: box.deleteAt(gercekIndex)
               final originalHiveIndex = rawList
                   .indexOf(rawList.firstWhere((e) => e['id'] == item.id));
 
@@ -102,7 +96,6 @@ class _VaultScreenState extends State<VaultScreen> {
                     padding: const EdgeInsets.all(16),
                     child: Row(
                       children: [
-                        // Sol taraf: İkon ve Güç Rengi
                         Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
@@ -113,7 +106,6 @@ class _VaultScreenState extends State<VaultScreen> {
                               Icon(Icons.key, color: Color(item.strengthColor)),
                         ),
                         const SizedBox(width: 15),
-                        // Orta: Başlık ve Şifre (Gizli)
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +117,7 @@ class _VaultScreenState extends State<VaultScreen> {
                                       fontSize: 16)),
                               const SizedBox(height: 4),
                               Text(
-                                "••••••••", // Şifreyi gizle
+                                "••••••••",
                                 style: TextStyle(
                                     color: Colors.grey[400],
                                     fontSize: 14,
@@ -134,7 +126,6 @@ class _VaultScreenState extends State<VaultScreen> {
                             ],
                           ),
                         ),
-                        // Sağ: Kopyala Butonu
                         IconButton(
                           icon: const Icon(Icons.copy, color: AppTheme.primary),
                           onPressed: () => _copyPassword(item.password),

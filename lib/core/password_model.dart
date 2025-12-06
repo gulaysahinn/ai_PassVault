@@ -1,10 +1,10 @@
 class PasswordModel {
   final String id;
-  final String title; // Örn: "Instagram Hesabım"
+  final String title;
   final String password;
   final DateTime createdAt;
-  final String strengthLabel; // "Güçlü", "Zayıf" vb.
-  final int strengthColor; // Renk kodu
+  final String strengthLabel;
+  final int strengthColor;
 
   PasswordModel({
     required this.id,
@@ -15,7 +15,6 @@ class PasswordModel {
     required this.strengthColor,
   });
 
-  // Veritabanına kaydederken JSON'a çevir (Map)
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -27,7 +26,6 @@ class PasswordModel {
     };
   }
 
-  // Veritabanından okurken Nesneye çevir
   factory PasswordModel.fromMap(Map<dynamic, dynamic> map) {
     return PasswordModel(
       id: map['id'],

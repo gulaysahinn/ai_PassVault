@@ -1,7 +1,6 @@
 import 'dart:math';
 
 class PasswordGenerator {
-  // Şifre Üretme Fonksiyonu
   static String generate({
     required int length,
     required bool useUpper,
@@ -22,14 +21,12 @@ class PasswordGenerator {
 
     if (allowedChars.isEmpty) return "Seçim Yapınız";
 
-    final Random rnd =
-        Random.secure(); // Kriptografik olarak güvenli rastgele sayı
+    final Random rnd = Random.secure();
     return List.generate(length, (index) {
       return allowedChars[rnd.nextInt(allowedChars.length)];
     }).join('');
   }
 
-  // Şifre Gücü Analizi (Basit Entropi Hesabı)
   static Map<String, dynamic> analyzeStrength(String password) {
     if (password.isEmpty || password == "Seçim Yapınız")
       return {"score": 0, "label": "Yok"};
@@ -40,7 +37,6 @@ class PasswordGenerator {
     if (password.contains(RegExp(r'[0-9]'))) poolSize += 10;
     if (password.contains(RegExp(r'[!@#\$%^&*(),.?":{}|<>]'))) poolSize += 32;
 
-    // Entropi formülü: Length * log2(poolSize)
     double entropy = password.length * (log(poolSize) / log(2));
 
     if (entropy < 28)

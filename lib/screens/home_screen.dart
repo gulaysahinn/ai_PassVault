@@ -5,9 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../core/app_theme.dart';
 import '../services/password_generator.dart';
-import '../services/storage_service.dart'; // EKLENDİ
+import '../services/storage_service.dart';
 import '../widgets/custom_widgets.dart';
-import 'vault_screen.dart'; // EKLENDİ
+import 'vault_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final StorageService _storage = StorageService(); // EKLENDİ
+  final StorageService _storage = StorageService();
 
   double _length = 12;
   bool _useUpper = true;
@@ -51,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // YENİ: Kaydetme Penceresi
   void _showSaveDialog() {
     if (_password == "Şifre Bekleniyor" || _password == "Seçim Yapınız") return;
 
@@ -114,7 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-          // YENİ: Kasa Butonu
           IconButton(
             icon: const Icon(Icons.history, color: AppTheme.primary),
             onPressed: () {
@@ -129,7 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // --- SONUÇ KARTI ---
             GlassCard(
               child: Column(
                 children: [
@@ -173,7 +170,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  // YENİ: Kart içi aksiyon butonları
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -194,17 +190,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ).animate().fadeIn(duration: 600.ms).moveY(begin: 20, end: 0),
-
             const SizedBox(height: 30),
-
-            // --- AYARLAR (Aynı) ---
             Text("Yapılandırma",
                 style: GoogleFonts.outfit(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.white)),
             const SizedBox(height: 15),
-
             GlassCard(
               child: Column(
                 children: [
@@ -248,10 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ).animate().fadeIn(delay: 200.ms).moveY(begin: 20, end: 0),
-
             const SizedBox(height: 30),
-
-            // --- BUTON ---
             ElevatedButton(
               onPressed: _generate,
               style: ElevatedButton.styleFrom(
