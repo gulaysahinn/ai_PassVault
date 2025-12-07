@@ -28,8 +28,9 @@ class PasswordGenerator {
   }
 
   static Map<String, dynamic> analyzeStrength(String password) {
-    if (password.isEmpty || password == "Seçim Yapınız")
-      return {"score": 0, "label": "Yok"};
+    if (password.isEmpty || password == "Seçim Yapınız") {
+      return {"score": 0, "label": "Yok", "color": 0xFF9E9E9E};
+    }
 
     int poolSize = 0;
     if (password.contains(RegExp(r'[a-z]'))) poolSize += 26;

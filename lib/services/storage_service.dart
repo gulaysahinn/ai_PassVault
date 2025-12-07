@@ -67,4 +67,8 @@ class StorageService {
   Future<void> deletePassword(int index) async {
     await _box.deleteAt(index);
   }
+
+  Future<void> editPassword(int index, PasswordModel updatedItem) async {
+    await _box.putAt(index, updatedItem.toMap());
+  }
 }

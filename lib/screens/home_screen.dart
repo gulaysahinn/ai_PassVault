@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; // HapticFeedback için gerekli
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart'; // Kontrol için gerekli
 
 import '../core/app_theme.dart';
 import '../services/password_generator.dart';
 import '../services/storage_service.dart';
 import '../widgets/custom_widgets.dart';
 import 'vault_screen.dart';
+import 'settings_screen.dart'; // YENİ EKLENDİ: Ayarlar sayfasına gitmek için
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,10 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _useNumbers = true;
   bool _useSymbols = true;
 
+  bool _sifreGizli = false;
+
   String _password = "Şifre Bekleniyor";
   Map<String, dynamic> _strength = {"label": "Yok", "color": 0xFF9E9E9E};
 
   void _generate() {
+    HapticFeedback.lightImpact();
+
     setState(() {
       _password = PasswordGenerator.generate(
         length: _length.toInt(),
@@ -43,14 +49,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _copyToClipboard() {
     if (_password == "Şifre Bekleniyor" || _password == "Seçim Yapınız") return;
+
+    HapticFeedback.selectionClick();
+
     Clipboard.setData(ClipboardData(text: _password));
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: const Text("Şifre Kopyalandı!"),
+      const SnackBar(
+          content: Text("Şifre Kopyalandı!"),
           backgroundColor: AppTheme.secondary),
     );
   }
 
+  // --- KAYIT FONKSİYONU (DUPLICATE KONTROLLÜ) ---
   void _showSaveDialog() {
     if (_password == "Şifre Bekleniyor" || _password == "Seçim Yapınız") return;
 
@@ -65,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
         content: TextField(
           controller: titleController,
           style: const TextStyle(color: Colors.white),
+          autofocus: true, // Klavye otomatik açılsın
           decoration: const InputDecoration(
             hintText: "Örn: Instagram, E-Okul...",
             hintStyle: TextStyle(color: Colors.grey),
@@ -83,16 +94,75 @@ class _HomeScreenState extends State<HomeScreen> {
             style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primary),
             child: const Text("KAYDET", style: TextStyle(color: Colors.black)),
             onPressed: () {
+              // --- KONTROL BAŞLIYOR ---
+
+              String girilenBaslik = titleController.text.trim();
+
+              // 1. Boş Başlık Kontrolü
+              if (girilenBaslik.isEmpty) {
+                HapticFeedback.heavyImpact();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Lütfen bir başlık giriniz! ⚠️"),
+                    backgroundColor: AppTheme.error,
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+                return;
+              }
+
+              // 2. Aynı İsim Kontrolü (Duplicate Check)
+              var box = Hive.box('passwords');
+              bool kayitVarMi = box.values.any((item) {
+                String mevcutBaslik = (item['title'] ?? "").toString();
+                return mevcutBaslik.toLowerCase() ==
+                    girilenBaslik.toLowerCase();
+              });
+
+              if (kayitVarMi) {
+                HapticFeedback.heavyImpact();
+                Navigator.pop(context); // İlk dialogu kapat
+
+                // Uyarı Dialogu Göster
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    backgroundColor: AppTheme.surface,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    title: const Text("Kayıt Mevcut! ⚠️",
+                        style: TextStyle(color: AppTheme.error)),
+                    content: Text(
+                      "'$girilenBaslik' isminde bir şifreniz zaten var.\n \nLütfen farklı bir isim giriniz (Örn: $girilenBaslik 2).",
+                      style: const TextStyle(color: Colors.white70),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text("Tamam",
+                            style: TextStyle(color: Colors.white)),
+                      )
+                    ],
+                  ),
+                );
+                return; // Kaydetme işlemini iptal et
+              }
+              // --- KONTROL BİTTİ, KAYIT İŞLEMİ ---
+
+              HapticFeedback.mediumImpact();
+
               _storage.savePassword(
-                titleController.text,
+                girilenBaslik,
                 _password,
                 _strength['label'],
                 _strength['color'],
               );
+
               Navigator.pop(context);
+
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                    content: Text("Şifre Kasaya Eklendi! ✅"),
+                    content: Text("Şifre Kaydedildi! ✅"),
                     backgroundColor: AppTheme.secondary),
               );
             },
@@ -113,13 +183,30 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
+          // --- YENİ EKLENEN AYARLAR BUTONU ---
+          IconButton(
+            icon: const Icon(Icons.settings, color: Colors.grey),
+            tooltip: "Ayarlar",
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsScreen()));
+            },
+          ),
+
+          const SizedBox(width: 5), // Biraz boşluk
+
+          // MEVCUT GEÇMİŞ (KASA) BUTONU
           IconButton(
             icon: const Icon(Icons.history, color: AppTheme.primary),
+            tooltip: "Şifre Kasası",
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const VaultScreen()));
             },
-          )
+          ),
+          const SizedBox(width: 8), // Sağ kenardan boşluk
         ],
       ),
       body: SingleChildScrollView(
@@ -158,13 +245,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   GestureDetector(
                     onTap: _copyToClipboard,
                     child: Text(
-                      _password,
+                      (_sifreGizli &&
+                              _password != "Şifre Bekleniyor" &&
+                              _password != "Seçim Yapınız")
+                          ? "." * _password.length
+                          : _password,
                       style: GoogleFonts.sourceCodePro(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
                         color: _password == "Seçim Yapınız"
                             ? AppTheme.error
-                            : Colors.white,
+                            : (_sifreGizli ? Colors.grey : Colors.white),
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -177,6 +268,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: const Icon(Icons.copy, color: Colors.grey),
                         onPressed: _copyToClipboard,
                         tooltip: "Kopyala",
+                      ),
+                      const SizedBox(width: 20),
+                      IconButton(
+                        icon: Icon(
+                          _sifreGizli ? Icons.visibility_off : Icons.visibility,
+                          color: AppTheme.primary,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _sifreGizli = !_sifreGizli;
+                          });
+                          HapticFeedback.lightImpact();
+                        },
+                        tooltip: "Gizle/Göster",
                       ),
                       const SizedBox(width: 20),
                       IconButton(

@@ -1,3 +1,4 @@
+import 'package:ai_password_app/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'core/app_theme.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'AI PassVault',
       theme: AppTheme.darkTheme,
-      home: const AuthScreen(),
+      home: const SplashScreen(),
     );
   }
 }
