@@ -9,8 +9,7 @@ A modern, secure, and AI-powered password manager application built with Flutter
 
 ## 📱 Screenshots (Ekran Görüntüleri)
 
-
-| <img src="assets\screenshots\screen5.jpg" width="200"/> | <img src="assets\screenshots\screen4.jpg" width="200"/> | <img src="assets\screenshots\screen3.jpg" width="200"/> | <img src="assets\screenshots\screen2.jpg" width="200"/> | <img src="assets\screenshots\screen1.jpg" width="200"/> |
+| <img src="assets\screenshots\screen8.jpg" width="200"/> | <img src="assets\screenshots\screen4.jpg" width="200"/> | <img src="assets\screenshots\screen7.jpg" width="200"/> | <img src="assets\screenshots\screen6.jpg" width="200"/> |
 
 ## ✨ Features (Özellikler)
 
@@ -27,9 +26,6 @@ A modern, secure, and AI-powered password manager application built with Flutter
 - **Local Database:** Hive & Flutter Secure Storage
 - **UI Components:** Glassmorphism, Google Fonts
 - **Animations:** Flutter Animate
-
-
-
 
 ## 👨‍💻 Developer
 
